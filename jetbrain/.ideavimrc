@@ -1,0 +1,75 @@
+source ~/.vimrc
+
+### Plugins
+" easymotionの設定
+" https://github.com/easymotion/vim-easymotion
+set easymotion
+nmap s <Plug>(easymotion-s2)
+
+" NERDTreeの設定
+" https://github.com/JetBrains/ideavim/wiki/NERDTree-support
+set NERDTree
+
+" surroundの設定
+" https://qiita.com/takuyanin/items/5eb009e737a235e51ab2
+set surround
+
+" ReplaceWithRegisterの設定
+" https://blog.mamansoft.net/2020/05/03/more-vimmer-intellij-idea-plugin/#replacewithregister
+set ReplaceWithRegister
+map _ gr
+
+" highlightedyankの設定
+" https://github.com/machakann/vim-highlightedyank
+set highlightedyank
+
+" multiple-cursorsの設定
+" https://blog.mamansoft.net/2020/05/03/more-vimmer-intellij-idea-plugin/#multiple-cursors
+" Ctrl+kで発動
+set multiple-cursors
+map <C-k> <A-n>
+
+### 一般設定
+" ヤンクした内容をクリップボードにコピー
+set clipboard+=unnamedplus
+
+" 大文字小文字を区別しない 
+set ignorecase
+
+
+
+### コマンド割り当て
+" jjでインサートモードからノーマルモードに戻る
+inoremap <silent> jj <ESC>
+
+" Leaderをspaceに設定
+let mapleader = "\<Space>"
+
+" 行末移動$をspace+lを割り当て
+nmap <Leader>l $
+" 行頭移動$をspace+hを割り当て
+nmap <Leader>h ^
+
+" Jetbratinの機能設定 https://ikenox.info/blog/ideavim-introduction/
+nnoremap ,e :action SearchEverywhere<CR>
+nnoremap ,g :action FindInPath<CR>
+nnoremap ,s :action FileStructurePopup<CR>
+
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gb :action JumpToLastChange<CR>
+
+nnoremap U :action FindUsages<CR>
+nnoremap R :action RenameElement<CR>
+
+nnoremap == :action ReformatCode<CR>
+vnoremap == :action ReformatCode<CR>
+
+nnoremap cc :action CommentByLineComment<CR>
+vnoremap cc :action CommentByLineComment<CR>
+
+nnoremap <C-CR> :action ShowIntentionActions<CR>
+
+nnoremap ,a :action GotoAction<CR>
+vnoremap ,a :action GotoAction<CR>
