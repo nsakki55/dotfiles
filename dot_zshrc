@@ -1,0 +1,182 @@
+
+# GCP sdk
+source $HOME/google-cloud-sdk/completion.zsh.inc
+
+# rye setting
+source "$HOME/.rye/env"
+
+# Go setting
+export GOPATH="$HOME/go"
+export PATH=$PATH:$GOPATH/bin
+
+# export PATH="$HOME/bin:$PATH"
+
+# MySQL setting
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+
+# Rust setting
+export PATH="$PATH:$HOME/.cargo/bin"
+
+# z setting
+. `brew --prefix`/etc/profile.d/z.sh
+
+# fzf setting
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+export FZF_DEFAULT_OPTS='--color=fg+:11 --height 70% --reverse --select-1 --exit-0 --multi'
+
+
+fh() {
+  eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
+}
+
+# fzf-cdr
+alias cdd='fzf-cdr'
+function fzf-cdr() {
+    target_dir=`cdr -l | sed 's/^[^ ][^ ]*  *//' | fzf`
+    target_dir=`echo ${target_dir/\~/$HOME}`
+    if [ -n "$target_dir" ]; then
+        cd $target_dir
+    fi
+}
+
+# fkill - kill process
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
+
+
+alias zf='z | fzf'
+
+#===============
+# neovim
+#===============
+# 設定ファイルパス
+export XDG_CONFIG_HOME=$HOME/.config
+
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+
+
+# ----------------------
+# Git Aliases
+# ----------------------
+alias g='git'
+alias gcm='git commit -m'
+alias gco='git checkout'
+alias gb='git branch'
+alias ga='git add'
+alias gd='git diff'
+alias gl='git log'
+alias gst='git stash'
+alias lg='lazygit'
+
+
+# git checkout branchをfzfで選択
+alias fgc='git checkout $(git branch -a | tr -d " " |fzf --height 100% --prompt "CHECKOUT BRANCH>" --preview "git log --color=always {}" | head -n 1 | sed -e "s/^\*\s*//g" | perl -pe "s/remotes\/origin\///g")'
+
+
+# 不要なローカルレポジトリを一括削除する
+function gclean() {
+    git branch | awk '{ if ($1 != "*") print $1; }' |  grep -vE "master|main|develop" | xargs git branch -D
+}
+
+# git fetch upstream $branch と git pull upstream $branchを行う
+alias gfp='(){git fu $1 && git pu $1}'
+
+# ---------------------
+# Docker Aliases
+# ---------------------
+alias d='docker'
+alias dc='docker-compose'
+
+docker-run() {
+  local container
+  container="$(docker image ls | sed -e '1d' | fzf --height 40% --reverse | awk -v 'OFS=:' '{print $1,$2}')"
+  if [ -n "${container}" ]; then
+    echo "runing container from ${container} ..."
+    docker container run -it --rm ${container}
+  fi
+}
+
+docker-exec() {
+  local container
+  container="$(docker image ls | sed -e '1d' | fzf --height 40% --reverse | awk -v 'OFS=:' '{print $1,$2}')"
+  if [ -n "${container}" ]; then
+    echo "runing container from ${container} ..."
+    docker run -it ${container} /bin/bash
+  fi
+}
+
+# ---------------------
+# kubectl Aliases
+# ---------------------
+alias kc="kubectl"
+
+# ---------------------
+# eza Aliases
+# ---------------------
+alias ei="eza --icons --git"
+alias ea="eza -a --icons --git"
+alias ee="eza -aahl --icons --git"
+alias et="eza -T -L 3 -a -I 'node_modules|.git|.cache' --icons"
+alias eta="eza -T -a -I 'node_modules|.git|.cache' --color=always --icons | less -r"
+alias ls=ei
+alias la=ea
+alias ll=ee
+alias lt=et
+alias lta=eta
+alias l="clear && ls"
+
+
+# ---------------------
+# ripgrep Aliases
+# ---------------------
+alias rg="rg --hidden"
+
+# ---------------------
+# bat Aliases
+# ---------------------
+alias cat="bat"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/satsuki/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/satsuki/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/satsuki/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/satsuki/google-cloud-sdk/completion.zsh.inc'; fi
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer chunk
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+zinit light zdharma/history-search-multi-word
+zinit light mollifier/anyframe
+
+
+# starship setting
+eval "$(starship init zsh)"
+
+# uv
+source $HOME/.cargo/env
+
+# btop
+alias top="btop"
