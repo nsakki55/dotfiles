@@ -180,3 +180,4 @@ source $HOME/.cargo/env
 
 # btop
 alias top="btop"
+

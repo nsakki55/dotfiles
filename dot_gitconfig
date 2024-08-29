@@ -1,0 +1,36 @@
+[user]
+	name = nsakki55
+	email = n.sakki55@gmail.com
+
+[url "github:"]
+    InsteadOf = https://github.com/
+	InsteadOf = git@github.com:
+
+# alias setting based on https://dev.classmethod.jp/articles/git-config-alias-19/
+[alias]
+    ss = status
+    br = branch
+    fu = fetch upstream
+    pu = pull upstream
+    psu = push upstream
+    pso = push origin
+    brm = branch -m
+    brd = branch -d
+    brdd = branch -D
+    co = checkout
+    cob = checkout -b
+    adu = add -u
+    adup = add -u -p
+    cm = commit
+    mg = merge --no-ff
+    mgff = merge --ff
+    cp = cherry-pick
+    log1 = log -1
+    log2 = log -2
+    log3 = log -3
+    logo = log --oneline
+    logn = log --name-status --oneline
+    firstcom = commit --allow-empty -m \"Initial commit\"
+    fpr    = "!f(){ git fetch upstream pull/$1/head:$1; git checkout $1; };f"
+[credential]
+	helper = cache
