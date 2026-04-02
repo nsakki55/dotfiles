@@ -1,15 +1,9 @@
-
-# GCP sdk
-source $HOME/google-cloud-sdk/completion.zsh.inc
-
-# rye setting
-source "$HOME/.rye/env"
+# brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Go setting
 export GOPATH="$HOME/go"
 export PATH=$PATH:$GOPATH/bin
-
-# export PATH="$HOME/bin:$PATH"
 
 # MySQL setting
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
@@ -17,28 +11,43 @@ export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 # Rust setting
 export PATH="$PATH:$HOME/.cargo/bin"
 
-# z setting
-. `brew --prefix`/etc/profile.d/z.sh
-
 # fzf setting
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_DEFAULT_OPTS='--color=fg+:11 --height 70% --reverse --select-1 --exit-0 --multi'
 
+# Java setting
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-17.jdk/Contents/Home
 
+# asdf setting
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+# z setting
+. ~/z/z.sh
+
+# fzf util commnad
+## find command history
 fh() {
   eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
 
-# fzf-cdr
-alias cdd='fzf-cdr'
-function fzf-cdr() {
-    target_dir=`cdr -l | sed 's/^[^ ][^ ]*  *//' | fzf`
-    target_dir=`echo ${target_dir/\~/$HOME}`
-    if [ -n "$target_dir" ]; then
-        cd $target_dir
+## move to directory under current directory
+cd-fzf-find() {
+    local DIR=$(ls -d */ 2> /dev/null | fzf +m)
+    if [ -n "$DIR" ]; then
+        cd "$DIR"
     fi
 }
+alias fd=cd-fzf-find
+
+## open file or direcotry in vim under current directory
+vim-fzf-find() {
+    local FILE=$(find . -maxdepth 1 ! -name '.' 2> /dev/null | sed 's|^\./||' | fzf +m)
+    if [ -n "$FILE" ]; then
+        vi "$FILE"
+    fi
+}
+alias fv=vim-fzf-find
 
 # fkill - kill process
 fkill() {
@@ -69,8 +78,8 @@ alias vim='nvim'
 # Git Aliases
 # ----------------------
 alias g='git'
-alias gcm='git commit -m'
 alias gco='git checkout'
+alias gcm='git checkout main'
 alias gb='git branch'
 alias ga='git add'
 alias gd='git diff'
@@ -90,6 +99,11 @@ function gclean() {
 
 # git fetch upstream $branch と git pull upstream $branchを行う
 alias gfp='(){git fu $1 && git pu $1}'
+
+# git-completionの読み込み
+fpath=(~/.zsh $fpath)
+zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+autoload -Uz compinit && compinit
 
 # ---------------------
 # Docker Aliases
@@ -146,11 +160,16 @@ alias rg="rg --hidden"
 # ---------------------
 alias cat="bat"
 
+# ---------------------
+# poetry Aliases
+# ---------------------
+alias pr="poetry run"
+
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/satsuki/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/satsuki/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/satsuki/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/satsuki/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -181,3 +200,18 @@ source $HOME/.cargo/env
 # btop
 alias top="btop"
 
+
+# terraform for mac
+# https://github.com/hashicorp/terraform/issues/27350#issuecomment-751213404
+export GODEBUG=asyncpreemptoff=1
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C $HOME/.asdf/installs/terraform/1.14.1/bin/terraform terraform

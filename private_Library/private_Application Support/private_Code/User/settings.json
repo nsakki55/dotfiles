@@ -1,298 +1,357 @@
 {
-    "editor.accessibilitySupport": "off",
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
+  "editor.accessibilitySupport": "off",
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+      "source.fixAll": "explicit"
     },
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
-    "python.formatting.provider": "black",
-    "[python]": {
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit"
-        },
-        // RuffのFormatter機能を有効化する
-        "editor.defaultFormatter": "charliermarsh.ruff",
-        "editor.formatOnSave": true
-      },
-      // 拡張機能ではなく、pip install した場合に指定してください
-      "ruff.path": ["${workspaceFolder}/.venv/bin/ruff"],
-      "mypy-type-checker.path": ["${workspaceFolder}/.venv/bin/mypy"],
-
-    "terminal.integrated.fontFamily": "'FiraCode Nerd Font', monospace",
-    // https://fe-notes.work/posts/20200708_vsvim01/
-    "editor.minimap.enabled": false,
-    "editor.renderWhitespace": "all",
-    "vim.leader": "<space>",
-    "vim.useSystemClipboard": true,
-    "vim.useCtrlKeys": true,
-    "vim.easymotion": true,
-    "vim.visualstar": true,
-    "vim.normalModeKeyBindingsNonRecursive": [
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true
+  },
+  "ruff.path": ["${workspaceFolder}/.venv/bin/ruff"],
+  // 検索ショートカットのための設定
+  //  https://tomoima525.hatenablog.com/entry/2025/03/11/121442
+  "search.mode": "reuseEditor",
+  "search.searchEditor.focusResultsOnSearch": true,
+  "search.searchOnType": false,
+  "vim.handleKeys": {
+    "<C-n>": false
+  },
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+  "vim.leader": "<space>",
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.easymotion": true,
+  "vim.visualstar": true,
+  // vimのキーバインドカスタマイズ
+  // https://fe-notes.work/posts/20200708_vsvim01/
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["u"],
+      "commands": [
         {
-            "before": [
-                "u"
-            ],
-            "commands": [
-                {
-                    "command": "undo"
-                }
-            ]
-        },
-        {
-            "before": [
-                "<C-r>"
-            ],
-            "commands": [
-                {
-                    "command": "redo"
-                }
-            ]
-        },
-        {
-            "before": [
-                "x"
-            ],
-            "after": [
-                "\"",
-                "_",
-                "x"
-            ]
-        },
-        {
-            "before": [
-                "s"
-            ],
-            "after": [
-                "\"",
-                "_",
-                "s"
-            ]
-        },
-        {
-            "before": [
-                "j"
-            ],
-            "after": [
-                "g",
-                "j"
-            ]
-        },
-        {
-            "before": [
-                "k"
-            ],
-            "after": [
-                "g",
-                "k"
-            ]
-        },
-        {
-            "before": [
-                "n"
-            ],
-            "after": [
-                "n",
-                "z",
-                "z"
-            ]
-        },
-        {
-            "before": [
-                "N"
-            ],
-            "after": [
-                "N",
-                "z",
-                "z"
-            ]
-        },
-        {
-            "before": [
-                "*"
-            ],
-            "after": [
-                "*",
-                "z",
-                "z"
-            ]
-        },
-        {
-            "before": [
-                "#"
-            ],
-            "after": [
-                "#",
-                "z",
-                "z"
-            ]
-        },
-        {
-            "before": [
-                "<Enter>"
-            ],
-            "commands": [
-                "editor.action.insertLineAfter"
-            ]
-        },
-        {
-            "before": [
-                "<Leader>",
-                "c"
-            ],
-            "commands": [
-                {
-                    "command": "editor.action.commentLine"
-                }
-            ]
-        },
-        {
-            "before": [
-                "<Leader>",
-                "w"
-            ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.files.save",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [
-                "<Leader>",
-                "q"
-            ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.closeActiveEditor",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [
-                "<Leader>",
-                "x"
-            ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.action.formatDocument",
-                    "args": []
-                }
-            ]
-        },
-        // Leader+lで行末にカーソル移動、Leader+hで行頭にカーソル移動する設定。
-        {
-            "before": [
-                "<Leader>",
-                "l"
-            ],
-            "after": [
-                "$"
-            ]
-        },
-        {
-            "before": [
-                "<Leader>",
-                "h"
-            ],
-            "after": [
-                "^"
-            ]
-        },
-        // Leader+mで対応する括弧に移動する設定。
-        {
-            "before": [
-                "<Leader>",
-                "m"
-            ],
-            "after": [
-                "%"
-            ]
-        },
-        {
-            "before": [
-                "<Leader>",
-                "z"
-            ],
-            "commands": [
-                ":noh"
-            ]
+          "command": "undo"
         }
-    ],
-    "vim.insertModeKeyBindingsNonRecursive": [
-        // j+jでInsertモードを抜ける設定。
-        {
-            "before": [
-                "j",
-                "j"
-            ],
-            "after": [
-                "<Esc>"
-            ]
-        },
-        {
-            "before": [
-                ";",
-                ";"
-            ],
-            "commands": [
-                "editor.action.triggerSuggest"
-            ]
-        },
-    ],
-    "vim.visualModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "<Leader>",
-                "l"
-            ],
-            "after": [
-                "$"
-            ]
-        },
-        {
-            "before": [
-                "<Leader>",
-                "h"
-            ],
-            "after": [
-                "^"
-            ]
-        },
-        {
-            "before": [
-                "<Leader>",
-                "m"
-            ],
-            "after": [
-                "%"
-            ]
-        },
-        {
-            "before": [
-                ">"
-            ],
-            "commands": [
-                "editor.action.indentLines"
-            ]
-        },
-        {
-            "before": [
-                "<"
-            ],
-            "commands": [
-                "editor.action.outdentLines"
-            ]
-        },
-    ],
-    "workbench.colorTheme": "Iceberg",
-    "explorer.compactFolders": false,
-    "git.openRepositoryInParentFolders": "always",
-    "files.associations": {
-        "*.yml": "yaml",
-        "*.dig": "yaml"
+      ]
     },
+    {
+      "before": ["<C-r>"],
+      "commands": [
+        {
+          "command": "redo"
+        }
+      ]
+    },
+    {
+      "before": ["x"],
+      "after": ["\"", "_", "x"]
+    },
+    {
+      "before": ["s"],
+      "after": ["\"", "_", "s"]
+    },
+    {
+      "before": ["j"],
+      "after": ["g", "j"]
+    },
+    {
+      "before": ["k"],
+      "after": ["g", "k"]
+    },
+    {
+      "before": ["n"],
+      "after": ["n", "z", "z"]
+    },
+    {
+      "before": ["N"],
+      "after": ["N", "z", "z"]
+    },
+    {
+      "before": ["*"],
+      "after": ["*", "z", "z"]
+    },
+    {
+      "before": ["#"],
+      "after": ["#", "z", "z"]
+    },
+    {
+      "before": ["<Enter>"],
+      "commands": ["editor.action.insertLineAfter"]
+    },
+    {
+      "before": ["<Leader>", "c"],
+      "commands": [
+        {
+          "command": "editor.action.commentLine"
+        }
+      ]
+    },
+    {
+      "before": ["<Leader>", "w"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.files.save",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<Leader>", "q"],
+      "after": [],
+      "commands": [
+        {
+          "command": "workbench.action.closeActiveEditor",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<Leader>", "x"],
+      "after": [],
+      "commands": [
+        {
+          "command": "editor.action.formatDocument",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<Leader>", "l"],
+      "after": ["$"]
+    },
+    {
+      "before": ["<Leader>", "h"],
+      "after": ["^"]
+    },
+    {
+      "before": ["<Leader>", "m"],
+      "after": ["%"]
+    },
+    {
+      "before": ["<Leader>", "z"],
+      "commands": [":noh"]
+    },
+    {
+      "before": ["<Leader>", "p"],
+      "commands": ["workbench.action.showCommands"]
+    },
+    {
+      "before": ["<Leader>", "t"],
+      "commands": ["workbench.action.reopenClosedEditor"]
+    },
+    {
+      "before": ["<Leader>", "o"],
+      "commands": ["workbench.action.showAllEditors"]
+    },
+    {
+      "before": [";", ";"],
+      "commands": ["editor.action.triggerSuggest"]
+    },
+    {
+      "before": ["<Leader>", "f", "w"],
+      "commands": ["workbench.action.findInFiles"]
+    },
+    {
+      "before": ["<Leader>", "f", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    }
+  ],
+  "vim.insertModeKeyBindingsNonRecursive": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    },
+    {
+      "before": [";", ";"],
+      "commands": ["editor.action.triggerSuggest"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<Leader>", "l"],
+      "after": ["$"]
+    },
+    {
+      "before": ["<Leader>", "h"],
+      "after": ["^"]
+    },
+    {
+      "before": ["<Leader>", "m"],
+      "after": ["%"]
+    },
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
+    }
+  ],
+  "explorer.compactFolders": false,
+  "git.openRepositoryInParentFolders": "always",
+  "files.associations": {
+    "*.yml": "yaml",
+    "*.dig": "yaml"
+  },
+  "files.autoSave": "onFocusChange",
+  "files.autoSaveDelay": 100,
+  "claudeCode.preferredLocation": "panel",
+  "terraform.experimentalFeatures.prefillRequiredFields": true,
+  "terraform.languageServer.enable": true,
+  "editor.suggest.preview": true,
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "[terraform-vars]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "claudeCode.selectedModel": "opus",
+  "workbench.colorTheme": "Tokyo Night Storm",
+  "background.windowBackgrounds": ["/Users/satsuki/Documents/IMG_7730.png"],
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "eslint.useFlatConfig": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "files.eol": "\n",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "always"
+    }
+  },
+  "eslint.format.enable": true,
+  "eslint.options": {
+    "flags": ["unstable_ts_config"]
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "workbench.activityBar.location": "hidden",
+  "workbench.statusBar.visible": true,
+  "workbench.editor.autoLockGroups": {
+    "workbench.editor.chatSession": false,
+    "mainThreadWebview-browserPreview": false
+  },
+  "files.trimTrailingWhitespace": true,
+  "editor.glyphMargin": false,
+  "terminal.integrated.mouseWheelZoom": true,
+  "claudeCode.useTerminal": true,
+  "chat.commandCenter.enabled": false,
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.editor.enablePreview": false,
+  "window.titleSeparator": "/",
+  "window.commandCenter": false,
+  "window.title": "${activeFolderMedium}${separator}${activeEditorShort}",
+  "window.density.editorTabHeight": "compact",
+  "background.autoInstall": false,
+  "breadcrumbs.symbolPath": "last",
+  "editor.folding": false,
+  "editor.foldingHighlight": false,
+  "breadcrumbs.enabled": false,
+  // https://www.youtube.com/watch?v=VmFOsK7IhI4
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.editor.showTabs": "multiple",
+  "workbench.startupEditor": "none",
+  "material-icon-theme.hidesExplorerArrows": true,
+  "workbench.tree.enableStickyScroll": true,
+  "explorer.decorations.badges": false,
+  "git.decorations.enabled": false,
+  "window.titleBarStyle": "custom",
+  "custom-ui-style.stylesheet": {
+    ".notification-toast": "box-shadow: none !important",
+    ".quick-input-widget.show-file-icons": "box-shadow: none !important",
+    ".quick-input-widget": "top: 25vh !important",
+    ".quick-input-list .scrollbar": "display: none",
+    ".monaco-action-bar.quick-input-inline-action-bar": "display: none",
+    ".editor-widget.find-widget": "box-shadow: none; border-radius: 4px",
+    ".quick-input-titlebar": "background: #100B15 !important",
+    ".monaco-workbench .part.editor > .content .editor-group-container > .title.title-border-bottom:after": "display: none",
+    ".monaco-scrollable-element > .shadow.top": "display: none",
+    ".sidebar .title-label": "padding: 0 !important",
+    ".sidebar": "border: none !important",
+    ".monaco-workbench .monaco-list:not(.element-focused):focus:before": "outline: none !important",
+    ".monaco-list-row.focused": "outline: none !important",
+    ".monaco-editor .scroll-decoration": "display: none",
+    ".title-actions": "display: none !important",
+    ".title.show-file-icons .label-container .monaco-icon-label.file-icon": "justify-content: center; padding: 0 !important",
+    ".title .monaco-icon-label:after": "margin-right: 0",
+    ".monaco-workbench .part.editor > .content .editor-group-container > .title > .label-container > .title-label": "padding-left: 60px",
+    ".title .monaco-icon-label.file-icon": "margin: 0 60px",
+    ".monaco-editor .cursors-layer .cursor": "background-image: linear-gradient(135deg, #7dcfff 10%, #7aa2f7 100%)"
+  },
+  "workbench.colorCustomizations": {
+    "editorCursor.background": "#000000",
+    "editorOverviewRuler.wordHighlightStrongForeground": "#0000",
+    "editorOverviewRuler.selectionHighlightForeground": "#0000",
+    "editorOverviewRuler.rangeHighlightForeground": "#0000",
+    "editorOverviewRuler.wordHighlightForeground": "#0000",
+    "editorOverviewRuler.bracketMatchForeground": "#0000",
+    "editorOverviewRuler.findMatchForeground": "#0000",
+    "editorOverviewRuler.modifiedForeground": "#0000",
+    "editorOverviewRuler.deletedForeground": "#0000",
+    "editorOverviewRuler.warningForeground": "#0000",
+    "editorOverviewRuler.addedForeground": "#0000",
+    "editorOverviewRuler.errorForeground": "#0000",
+    "editorOverviewRuler.infoForeground": "#0000",
+    "editorOverviewRuler.border": "#0000",
+    "list.focusBackground": "#3d5580",
+  },
+  "custom-ui-style.font.sansSerif": "Nerd Font",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.cursorBlinking": "solid",
+  "editor.cursorStyle": "block",
+  "editor.links": false,
+  "files.insertFinalNewline": true,
+  "editor.showFoldingControls": "never",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "editor.overviewRulerBorder": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.tabCompletion": "on",
+  "emmet.triggerExpansionOnTab": true,
+  "extensions.ignoreRecommendations": true,
+  "workbench.sideBar.location": "right",
+
+  // tokyo night コメントカラー変更
+  "editor.tokenColorCustomizations": {
+    "[Tokyo Night]": {
+      // or "[Tokyo Night Storm]"
+      "textMateRules": [
+        {
+          "scope": [
+            "comment",
+            "meta.var.expr storage.type",
+            "keyword.control.flow",
+            "keyword.control.return",
+            "meta.directive.vue punctuation.separator.key-value.html",
+            "meta.directive.vue entity.other.attribute-name.html",
+            "tag.decorator.js entity.name.tag.js",
+            "tag.decorator.js punctuation.definition.tag.js",
+            "storage.modifier"
+          ],
+          "settings": {
+            "fontStyle": ""
+          }
+        }
+      ]
+    }
+  },
+  "workbench.editor.enablePreviewFromQuickOpen": true,
+  "workbench.layoutControl.enabled": false,
+  "editor.fontSize": 11,
+  "debug.console.fontSize": 11,
+  "terminal.integrated.fontSize": 11,
+  "terminal.integrated.tabs.enabled": false,
+  "workbench.panel.showLabels": false
 }
+
