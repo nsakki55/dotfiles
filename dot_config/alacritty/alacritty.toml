@@ -1,5 +1,4 @@
 import = ["~/.config/alacritty/catppuccin/catppuccin-mocha.toml"]
-#import = ["~/.config/alacritty/themes/themes/flat_remix.toml"]
 
 [shell]
 program = "/bin/zsh"
